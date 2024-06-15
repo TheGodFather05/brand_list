@@ -10,6 +10,8 @@
 - [About](#about-this-project)
 - [Implementation](#the-implementation)
 - [Structure](#project-structure)
+- [Setup](#setup-instructions)
+- [licence](#license)
 
 ## About This Project
 
@@ -28,7 +30,7 @@ You can find a top list on this website : https://www.casinoonlinefrancais.info/
 To get this done, i created a laravel project for the backend where i'll implement a REST API that will be later consumed by an html css js application i created
 The whole is dockerized and well managed to be run easily
 
-## Project Structure
+### Project Structure
 
 - brand_list/
     - backend/

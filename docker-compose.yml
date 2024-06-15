@@ -6,7 +6,7 @@ services:
                 user: local
                 uid: 1000
             context: ./
-            dockerfile: Dockerfile
+            dockerfile: backend/Dockerfile
         image: brandlist
         container_name: brandlist-app
         restart: unless-stopped
@@ -44,6 +44,15 @@ services:
             - ./docker-compose/nginx:/etc/nginx/conf.d/
         networks:
             - brandlist
+    frontend:
+        build:
+            context: ./frontend
+            dockerfile: Dockerfile
+        container_name: frontend
+        ports:
+            - "80:80"
+        depends_on:
+            - app
 networks:
     brandlist:
         driver: bridge

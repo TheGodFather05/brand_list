@@ -1,58 +1,61 @@
 version: "3.7"
 services:
-    app:
-        build:
-            args:
-                user: local
-                uid: 1000
-            context: ./
-            dockerfile: backend/Dockerfile
-        image: brandlist
-        container_name: brandlist-app
-        restart: unless-stopped
-        working_dir: /var/www/
-        volumes:
-            - ./:/var/www
-        #command: sh -c "composer install --ignore-platform-reqs && php artisan key:generate && php artisan migrate"
-        networks:
-            - brandlist
-    db:
-        image: mysql:8.0
-        container_name: brandlist-db
-        restart: unless-stopped
-        ports:
-            - 3306:3306
-        environment:
-            MYSQL_DATABASE: ${DB_DATABASE}
-            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-            MYSQL_PASSWORD: ${DB_PASSWORD}
-            MYSQL_USER: ${DB_USERNAME}
-            SERVICE_TAGS: dev
-            SERVICE_NAME: mysql
-        volumes:
-            - ./docker-compose/mysql:/docker-entrypoint-initdb.d
-        networks:
-            - brandlist
-    nginx:
-        image: nginx:alpine
-        container_name: brandlist-server
-        restart: unless-stopped
-        ports:
-            - 8000:80
-        volumes:
-            - ./:/var/www
-            - ./docker-compose/nginx:/etc/nginx/conf.d/
-        networks:
-            - brandlist
-    frontend:
-        build:
-            context: ./frontend
-            dockerfile: Dockerfile
-        container_name: frontend
-        ports:
-            - "80:80"
-        depends_on:
-            - app
+  app:
+    build:
+      args:
+        user: local
+        uid: 1000
+      context: ./backend
+      dockerfile: Dockerfile
+    image: brandlist
+    container_name: brandlist-app
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - ./backend:/var/www
+    networks:
+      - brandlist
+    depends_on:
+      - db
+  db:
+    image: mysql:8.0
+    container_name: brandlist-db
+    restart: unless-stopped
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - ./backend/docker-compose/mysql:/docker-entrypoint-initdb.d
+    networks:
+      - brandlist
+  nginx:
+    image: nginx:alpine
+    container_name: brandlist-server
+    restart: unless-stopped
+    ports:
+      - 8000:80
+    volumes:
+      - ./backend:/var/www
+      - ./backend/docker-compose/nginx:/etc/nginx/conf.d/
+    networks:
+      - brandlist
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: frontend
+    ports:
+      - "80:80"
+    networks:
+      - brandlist
+    depends_on:
+      - app
 networks:
-    brandlist:
-        driver: bridge
+  brandlist:
+    driver: bridge

@@ -12,7 +12,8 @@ RUN apt update && apt install -y \
     libpng-dev \
     libonig-dev \
     libxml2-dev \
-    zip
+    zip \
+    unzip
 
 RUN apt clean && rm -rf /var/lib/apt/lists/*
 RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
@@ -23,8 +24,9 @@ RUN mkdir -p /home/$user/.composer && \
     chown -R $user:$user /home/$user
 
 WORKDIR /var/www
+
 # Copy the application code into the container
-COPY .. /var/www
+COPY . /var/www
 
 RUN chmod -R 775 /var/www
 RUN chmod -R 775 /tmp/
@@ -37,9 +39,7 @@ RUN chmod -R 775 /tmp/run.sh
 RUN chown -R $user:$user /tmp/run.sh
 USER $user
 
-RUN composer install --prefer-dist --no-scripts --no-dev --optimize-autoloader
+#RUN composer install --prefer-dist --no-scripts --no-dev --optimize-autoloader
 
 ENTRYPOINT ["/tmp/run.sh"]
 
-#RUN php artisan migrate
-#RUN php artisan DB:seed

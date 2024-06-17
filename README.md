@@ -1,7 +1,7 @@
 <p align="center"><a href="https://bluewindowltd.com/" target="_blank"><img src="https://bluewindowltd.com/wp-content/uploads/2021/07/logo-BW-small.png" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
-<a href="https://github.com/TheGodFather05/brand_list"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
+<a href="https://github.com/TheGodFather05/brand_list"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="repo"></a>
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 

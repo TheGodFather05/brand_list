@@ -27,7 +27,7 @@ class BrandController extends Controller
     public function index(Request $request)
     {
         $country = $request->header('CF-IPCountry');
-       // dd($country);
+        // dd($country);
         $data = $this->brandRepository->index();
         //
         return ApiResponseClass::sendResponse(BrandResource::collection($data), 'Brands fetched successfully', 200);
@@ -58,7 +58,7 @@ class BrandController extends Controller
         try {
             $brand = $this->brandRepository->store($data);
             DB::commit();
-            return ApiResponseClass::sendResponse(new BrandResource($brand), 'Brand created successfully', 200);
+            return ApiResponseClass::sendResponse(new BrandResource($brand), 'Product created successfully', 200);
         } catch (\Exception $ex) {
             ApiResponseClass::rollback($ex);
         }
@@ -97,7 +97,7 @@ class BrandController extends Controller
         try {
             $brand = $this->brandRepository->update($data, $id);
             DB::commit();
-            return ApiResponseClass::sendResponse(new BrandResource($brand), 'Brand created successfully', 201);
+            return ApiResponseClass::sendResponse(new BrandResource($brand), 'Brand updated successfully', 201);
         } catch (\Exception $ex) {
             ApiResponseClass::rollback($ex);
         }

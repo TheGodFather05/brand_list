@@ -37,7 +37,7 @@ class BrandRepository implements BrandRepositoryInterface
     public function update(array $data, $id)
     {
         // TODO: Update a brand.
-        return Brand::whereId($id)->update();
+        return Brand::whereId($id)->update($data);
     }
 
     public function delete($id)
